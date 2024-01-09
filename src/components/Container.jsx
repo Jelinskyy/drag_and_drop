@@ -1,9 +1,18 @@
+import { useState } from "react"
 import "../styles/Container.css"
+import Box from "./Box.jsx"
+
 
 export default function Container(props){
-    return(
-        <div class="Container-body"> 
+    
+    // maping box array elements to jsx tags
+    const boxMap = props.boxes.map(e=>(
+        <Box boxInfo={e} key={e.id}/>
+    ))
 
+    return(
+        <div className="Container-body"> 
+            {boxMap}
         </div>
     )
 }

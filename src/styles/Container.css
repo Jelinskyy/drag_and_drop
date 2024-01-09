@@ -1,9 +1,13 @@
 .Container-body{
-    min-width: 30vw;
-    min-height: 30vh;
+    box-sizing:unset;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 1em;
+    margin: 0 5em;
+    width: 36em;
+    min-height: 24em;
     background-color: #383c44;
     border-radius: 10px;
     border: 3px solid #181c24;
-    padding: 1em;
-    margin: 0 5em;
 }
