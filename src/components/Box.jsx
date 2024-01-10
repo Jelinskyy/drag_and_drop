@@ -6,8 +6,20 @@ export default function Box(props){
         borderColor: `#${props.boxInfo.borderColor}`
     }
 
+    const styleHolded = {
+        ...style,
+        position: "fixed",
+        top: props.mousePosition.y,
+        left: props.mousePosition.x,
+        transform: "translate(-50%, -50%)"
+    }
+
+    function toggleDrag(){
+        props.toggleHold(props.boxInfo.id)
+    }
+
     return (
-        <div className="Box-body" style={style}>
+        <div className="Box-body" style={props.boxInfo.holded?styleHolded:style} onPointerDown={toggleDrag} onPointerUp={toggleDrag}>
 
         </div>
     )

@@ -7,7 +7,7 @@ export default function Container(props){
     
     // maping box array elements to jsx tags
     const boxMap = props.boxes.map(e=>(
-        <Box boxInfo={e} key={e.id}/>
+        <Box boxInfo={e} toggleHold={props.toggleHold} mousePosition={props.mousePosition} key={e.id}/>
     ))
 
     return(
