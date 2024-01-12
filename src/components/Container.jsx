@@ -11,7 +11,7 @@ export default function Container(props){
     ))
 
     return(
-        <div className="Container-body" onPointerUp={() => props.handleDrop(props.containerId)}> 
+        <div className="Container-body" onPointerEnter={() => props.handleTarget(props.containerId)}> 
             {boxMap}
         </div>
     )

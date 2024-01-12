@@ -4,17 +4,24 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [boxes, setBoxes] = useState(() => seedBoxes(5)) //array of all boxes
-  const [hold, setHold] = useState(null)
+  const [target, setTarget] = useState(null) 
   const [mousePosition, setMousePosition] = useState({
     x: 0,
     y: 0
   })
 
   useEffect(() => {
-    window.addEventListener('mousemove', (event) => {
+    window.addEventListener('mousemove', event => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     });
   }, [])
+
+  useEffect(() => {
+    window.addEventListener('pointerup', handleDrop)
+    return () => {
+      window.removeEventListener("pointerup", handleDrop)
+    }
+  }, [boxes, target])
 
   // creating randomly colored boxes to seed array
   function seedBoxes(count){
@@ -45,24 +52,25 @@ function App() {
       }
       : e
     }))
-    setHold(boxId)
   }
 
-  function handleDrop(containerId){
-    console.log(containerId)
-    if(hold!=null){
-      let holded = boxes.find(e=>e.id===hold)
+  function handleDrop(){
+    let holded = boxes.find(e=>e.holded)
+    console.log(boxes.filter(e=>!e.holded))
+    if(holded!=undefined){
       setBoxes(prevBoxes =>  [
-          ...prevBoxes.filter(e=>e.id!=hold),
+          ...prevBoxes.filter(e=>!e.holded),
           {
             ...holded,
-            containerKey: containerId,
+            containerKey: target===null?holded.containerKey:target,
             holded: false
           }
         ])
-
-      setHold(null)
     }
+  }
+
+  function handleTarget(containerId){
+    setTarget(containerId)
   }
 
   // creating saparete box arrays for each container
@@ -77,8 +85,8 @@ function App() {
         </p>
       </header>
       <main className="App-body">
-        <Container key={0} containerId={0} boxes={container0Boxes} handleDrag={handleDrag} handleDrop={handleDrop} mousePosition={mousePosition}/>
-        <Container key={1} containerId={1} boxes={container1Boxes} handleDrag={handleDrag} handleDrop={handleDrop} mousePosition={mousePosition}/>
+        <Container key={0} containerId={0} boxes={container0Boxes} handleDrag={handleDrag} handleTarget={handleTarget} mousePosition={mousePosition}/>
+        <Container key={1} containerId={1} boxes={container1Boxes} handleDrag={handleDrag} handleTarget={handleTarget} mousePosition={mousePosition}/>
       </main>
     </div>
   );
