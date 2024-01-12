@@ -11,15 +11,12 @@ export default function Box(props){
         position: "fixed",
         top: props.mousePosition.y,
         left: props.mousePosition.x,
+        pointerEvents: "none",
         transform: "translate(-50%, -50%)"
     }
 
-    function toggleDrag(){
-        props.toggleHold(props.boxInfo.id)
-    }
-
     return (
-        <div className="Box-body" style={props.boxInfo.holded?styleHolded:style} onPointerDown={toggleDrag} onPointerUp={toggleDrag}>
+        <div className="Box-body" style={props.boxInfo.holded?styleHolded:style} onPointerDown={() => props.handleDrag(props.boxInfo.id)}>
 
         </div>
     )
